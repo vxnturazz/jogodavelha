@@ -1,58 +1,39 @@
-const board = document.getElementById("board")
-const casinhas = board.getElementsByTagName("div")
-const boxVencedor = document.getElementById("vencedor")
-
-let jogadas = 0;
-
-for (let i=0; i<casinhas.length; i++) {
-  console.log(casinhas[i])
-  casinhas[i].addEventListener('click', casinhaclick)
-}
-
-function casinhaclick() {
-    if(this.innerHTML == "") {
-        if(jogadas%2 == 0) {
-            this.innerHTML = "X";
-        }else{
-            this.innerHTML = "O";
+document.addEventListener('DOMContentLoaded', () => {
+    const casinhas = document.querySelectorAll('.casinha');
+    let jogador = 'X';
+  
+    casinhas.forEach(casinha => {
+      casinha.addEventListener('click', () => {
+        if (!casinha.textContent) {
+          casinha.textContent = jogador;
+          jogador = jogador === 'X' ? 'O' : 'X';
+          verificarVencedor();
         }
-        jogadas +=1;    
+      });
+    });
+  
+    function verificarVencedor() {
+      const combinacoes = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
+  
+      combinacoes.forEach(combinacao => {
+        const [a, b, c] = combinacao;
+        const casinhaA = casinhas[a].textContent;
+        const casinhaB = casinhas[b].textContent;
+        const casinhaC = casinhas[c].textContent;
+  
+        if (casinhaA && casinhaA === casinhaB && casinhaA === casinhaC) {
+          document.getElementById('vencedor').textContent = `O vencedor é ${casinhaA}!`;
+          casinhas.forEach(casinha => casinha.removeEventListener('click', () => {}));
+        }
+      });
     }
-    if(jogadas >=5){
-        verificaGanhador()
-    }
-}
-
-function verificaGanhador() {
-    //validando na horizontal
-    if(casinhas[0].innerHTML == casinhas[1].innerHTML && casinhas[1].innerHTML == casinhas[2].innerHTML) {
-        boxVencedor.innerHTML = "O '" + casinhas[0].innerHTML + "' Venceu!"
-    }
-    if(casinhas[3].innerHTML == casinhas[4].innerHTML && casinhas[4].innerHTML == casinhas[5].innerHTML) {
-        alert("O '" + casinhas[3].innerHTML + "' Venceu!")
-    }
-    if(casinhas[6].innerHTML == casinhas[7].innerHTML && casinhas[7].innerHTML == casinhas[8].innerHTML) {
-        alert("O '" + casinhas[6].innerHTML + "' Venceu!")
-    }
-
-    //validando na vertical
-    if(casinhas[0].innerHTML == casinhas[3].innerHTML && casinhas[3].innerHTML == casinhas[6].innerHTML) {
-        alert("O '" + casinhas[0].innerHTML + "' Venceu!")
-    }
-    if(casinhas[1].innerHTML == casinhas[4].innerHTML && casinhas[4].innerHTML == casinhas[7].innerHTML) {
-        alert("O '" + casinhas[1].innerHTML + "' Venceu!")
-    }
-    if(casinhas[2].innerHTML == casinhas[5].innerHTML && casinhas[5].innerHTML == casinhas[8].innerHTML) {
-        alert("O '" + casinhas[2].innerHTML + "' Venceu!")
-    }
-
-    //validando na vertical
-    if(casinhas[0].innerHTML == casinhas[4].innerHTML && casinhas[4].innerHTML == casinhas[8].innerHTML) {
-        alert("O '" + casinhas[0].innerHTML + "' Venceu!")
-    }
-    if(casinhas[2].innerHTML == casinhas[4].innerHTML && casinhas[4].innerHTML == casinhas[6].innerHTML) {
-        alert("O '" + casinhas[2].innerHTML + "' Venceu!")
-    }
-
-    console.log(casinhas[0].innerHTML)
-}
+  });

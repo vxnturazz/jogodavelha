@@ -1,21 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
 #board {
-  border: thin solid red;
-  width: 420px;
-  height: 420px;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 5px;
+  margin: 20px auto;
+  width: 315px; /* Ajuste se necessário */
 }
 
 .casinha {
-  width: 135px;
-  height: 135px;
-  border: thin solid;
-  float: left;
-  text-align:center;
-  line-height: 135px;
-  font-size:80px;
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  cursor: pointer;
 }
 
-.gray {
-  background: black;
-  color: #ffffff;
+.casinha.gray {
+  background-color: #ddd;
+}
+
+#vencedor {
+  margin: 20px;
+  font-size: 1.5em;
+  color: #007BFF; /* Ajuste a cor conforme necessário */
 }
